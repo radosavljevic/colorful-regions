@@ -5,7 +5,7 @@
     "version": "0.0.1",
     "publisher": "hiduk",
     "engines": {
-        "vscode": "^1.22.0"
+        "vscode": "^1.18.0"
     },
     "categories": [
         "Other"
@@ -34,6 +34,9 @@
         "vscode": "^1.1.6",
         "tslint": "^5.8.0",
         "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
-    }
+        "@types/mocha": "^2.2.42",
+        "eslint": "3.x",
+        "babel-eslint": "7"
+    },
+    "dependencies": {}
 }
