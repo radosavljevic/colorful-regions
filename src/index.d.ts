@@ -15,3 +15,7 @@ interface State {
     render: (model: Model) => void;
     nextState: (model: Model) => void;
 }
+
+interface PositionWithColor extends vscode.Position {
+    color?: string;
+}
