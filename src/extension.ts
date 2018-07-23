@@ -3,10 +3,10 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 // import * as ast from 'babel-eslint';
-import { parse } from 'babel-eslint';
+// import { parse } from 'babel-eslint';
 import { Model } from '.';
 import present from './present';
-import {init} from './actions';
+import { init, update } from './actions';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -52,14 +52,17 @@ export function activate(context: vscode.ExtensionContext) {
     // }
 
 
-    // context.subscriptions.push(disposable);
-    console.log('ACTIVATE');
+    // context.subscriptions.push(disposable);    
     init(context, model);
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
 }
+
+vscode.window.onDidChangeTextEditorSelection(evt => {    
+    update(evt, model);
+});
 
 const model: Model = {
     extensionContext: null,

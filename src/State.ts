@@ -1,5 +1,6 @@
 import { State } from '.';
 import * as vscode from 'vscode';
+import colorRegions from './reactors/colorRegions'
 
 const state: State = {
     render(model) {
@@ -16,6 +17,8 @@ const state: State = {
             });
 
             model.extensionContext.subscriptions.push(disposable);
+            
+            colorRegions(model);
         }
         
         state.nextState(model);
