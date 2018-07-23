@@ -38,5 +38,8 @@
         "typescript": "^2.6.1",
         "vscode": "^1.1.6"
     },
-    "dependencies": {}
+    "dependencies": {
+        "color": "^3.0.0",
+        "color-scheme": "^1.0.1"
+    }
 }
