@@ -13,9 +13,13 @@ const scheme = new ColorScheme;
 const colorRegions = (model: Model) => {    
     const activeTextEditor = vscode.window.activeTextEditor;
 
+    console.log('COLORREGIONS')
+
     // Find regions
     const AST = parse(activeTextEditor.document.getText());
     const comments: any[] = AST.comments;
+
+    
 
     const regionsStart = comments
         .filter(comment => comment.value.indexOf('#region') !== -1)
@@ -33,6 +37,8 @@ const colorRegions = (model: Model) => {
             
             return _comment;
         });
+
+    console.log('REGION START', regionsStart);
     
     const regionsEnd = comments
         .filter(comment => comment.value.indexOf('#endregion') !== -1)
@@ -42,6 +48,8 @@ const colorRegions = (model: Model) => {
         .from_hue(21)        
         .scheme('tetrade')        
         .variation('pastel');
+    
+    
     
     regionsStart.forEach((region, i) => {
         let color;
