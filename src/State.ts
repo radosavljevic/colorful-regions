@@ -1,6 +1,5 @@
 import { State } from '.';
-import * as vscode from 'vscode';
-import colorRegions from './reactors/colorRegions'
+import colorRegions from './reactors/colorRegions';
 
 const state: State = {
     render(model) {        

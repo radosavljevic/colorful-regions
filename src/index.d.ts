@@ -8,6 +8,9 @@ type Present = (this: Model, data: PresentData) => void
 interface Model {
     extensionContext: vscode.ExtensionContext;
     activeTextEditor: vscode.TextEditor;
+    regions: vscode.Range[][];
+    colors: string[];
+    decorationTypes: vscode.TextEditorDecorationType[];
     present: Present
 }
 

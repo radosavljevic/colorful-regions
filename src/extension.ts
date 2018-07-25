@@ -7,6 +7,9 @@ import { init, update } from './actions';
 const model: Model = {
     extensionContext: null,
     activeTextEditor: null,
+    colors: [],
+    decorationTypes: [],
+    regions: [],
     present
 };
 
