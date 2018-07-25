@@ -10,8 +10,7 @@ const model: Model = {
     present
 };
 
-export function activate(context: vscode.ExtensionContext) {
-    console.log('ACTIVATE');
+export function activate(context: vscode.ExtensionContext) {    
     init(context, model);
 }
 
@@ -19,11 +18,6 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
 }
 
-vscode.window.onDidChangeTextEditorSelection(evt => {    
-    update(evt, model);
+vscode.workspace.onDidChangeTextDocument(evt => {
+    update(null, model);
 });
-
-
-
-
-

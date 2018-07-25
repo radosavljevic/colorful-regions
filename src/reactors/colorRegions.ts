@@ -11,14 +11,11 @@ const parse = babel.parse;
 const scheme = new ColorScheme;
 
 const colorRegions = (model: Model) => {    
-    const activeTextEditor = vscode.window.activeTextEditor;
-
-    console.log('COLORREGIONS')
+    const activeTextEditor = vscode.window.activeTextEditor;    
 
     // Find regions
     const AST = parse(activeTextEditor.document.getText());
     const comments: any[] = AST.comments;
-
     
 
     const regionsStart = comments
@@ -36,9 +33,7 @@ const colorRegions = (model: Model) => {
             }            
             
             return _comment;
-        });
-
-    console.log('REGION START', regionsStart);
+        });    
     
     const regionsEnd = comments
         .filter(comment => comment.value.indexOf('#endregion') !== -1)
@@ -62,10 +57,14 @@ const colorRegions = (model: Model) => {
         }
 
         const range = [new vscode.Range(regionsStart[i], regionsEnd[i])];        
-        const overviewRulerColor = `rgba(${color.red()}, ${color.green()}, ${color.blue()}, 0.61)`;
+        // const overviewRulerColor = `rgba(${color.red()}, ${color.green()}, ${color.blue()}, 0.61)`;
+        const overviewRulerColor = color.hex();
+        
         const decorationType = vscode.window.createTextEditorDecorationType({
             overviewRulerColor
         });
+        
+        setTimeout(() => decorationType.dispose(), 6000);
 
         activeTextEditor.setDecorations(decorationType, range);
     });    
