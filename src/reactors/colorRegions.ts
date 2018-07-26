@@ -21,7 +21,7 @@ const colorRegions = (
             overviewRulerColor
         });
 
-        activeTextEditor.setDecorations(decorationType, range);
+        activeTextEditor.setDecorations(decorationType, range);        
     });
 };
 

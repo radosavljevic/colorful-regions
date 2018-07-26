@@ -26,7 +26,7 @@ const state: State = {
         // const activeTextEditor = vscode.window.activeTextEditor;
 
         if (
-            state.ready(model) &&            
+            state.ready(model) &&
             model.regions === null
 
         ) {
@@ -36,15 +36,29 @@ const state: State = {
 
         // Update decorations if something changes
         if (
-            model.decorationTypes !== null &&
-            model.regions.length > 0 &&
-            model.regions.length !== model.decorationTypes.length
-        ) {
+            (
+                model.regions !== null &&
+                model.decorationTypes === null &&
+                model.regions.length > 0
+            ) ||
+            (
+                model.regions !== null &&
+                model.decorationTypes !== null &&
+                model.regions.length !== model.decorationTypes.length
+            )
+        ) {            
             updateDecorationTypes(
                 model.regions,
-                model.decorationTypes,
                 model
             );
+        }
+
+        if (
+            model.decorationTypes !== null &&
+            model.decorationTypes.length > 0
+        ) {
+            debugger;
+            model.decorationTypes.map(decorationType => decorationType.dispose());
         }
     }
 };

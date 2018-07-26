@@ -60,10 +60,19 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
 };
 
 const updateDecorationTypes = (
-    regions, decorationTypes: vscode.TextEditorDecorationType[],
+    regions: Region[],
     model: Model
 ) => {
-    decorationTypes.map(decorationType => decorationType.dispose());
+    const decorationTypes = regions.map(region => {        
+        const overviewRulerColor = region.color;
+        const decorationType = vscode.window.createTextEditorDecorationType({
+            overviewRulerColor
+        });
+
+        return decorationType;
+    });
+
+    // decorationTypes.map(decorationType => decorationType.dispose());
     model.present({ decorationTypes });
 };
 
