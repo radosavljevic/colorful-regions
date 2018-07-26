@@ -1,4 +1,4 @@
-import { Model, PositionWithColor } from "..";
+import { Region } from "..";
 import * as vscode from 'vscode';
 // import {} from 'vscode/src/editor/contrib/folding/indentRangeProvider';
 import * as babel from 'babel-eslint';
@@ -10,64 +10,19 @@ import { isHexColor } from '../util/helpers';
 const parse = babel.parse;
 const scheme = new ColorScheme;
 
-const colorRegions = (model: Model) => {    
-    const activeTextEditor = vscode.window.activeTextEditor;    
-
-    // Find regions
-    const AST = parse(activeTextEditor.document.getText());
-    const comments: any[] = AST.comments;
-    
-
-    const regionsStart = comments
-        .filter(comment => comment.value.indexOf('#region') !== -1)
-        .map(comment => {
-            let commentTitleWords: any[] = comment.value.split(' ');
-            let commentColor = commentTitleWords
-                .slice(1, commentTitleWords.length)
-                .filter(word => isHexColor(word));
-
-            const _comment: PositionWithColor = activeTextEditor.document.positionAt(comment.start);
-
-            if (commentColor.length > 0) {
-                _comment.color = commentColor[0];
-            }            
-            
-            return _comment;
-        });    
-    
-    const regionsEnd = comments
-        .filter(comment => comment.value.indexOf('#endregion') !== -1)
-        .map(comment => activeTextEditor.document.positionAt(comment.start - 1));
-    
-    const colors = scheme
-        .from_hue(21)        
-        .scheme('tetrade')        
-        .variation('pastel');
-    
-    
-    
-    regionsStart.forEach((region, i) => {
-        let color;
-        
-        // Assign color to region
-        if (region.color) {
-            color = Color(region.color);
-        } else {
-            color = Color(`#${colors.colors()[i]}`);            
-        }
-
-        const range = [new vscode.Range(regionsStart[i], regionsEnd[i])];        
-        // const overviewRulerColor = `rgba(${color.red()}, ${color.green()}, ${color.blue()}, 0.61)`;
-        const overviewRulerColor = color.hex();
-        
+const colorRegions = (
+    activeTextEditor: vscode.TextEditor,
+    regions: Region[]
+) => {
+    regions.forEach(region => {        
+        const range = [new vscode.Range(region.start, region.end)];
+        const overviewRulerColor = region.color;
         const decorationType = vscode.window.createTextEditorDecorationType({
             overviewRulerColor
         });
-        
-        setTimeout(() => decorationType.dispose(), 6000);
 
         activeTextEditor.setDecorations(decorationType, range);
-    });    
+    });
 };
 
 export default colorRegions;
