@@ -35,31 +35,31 @@ const state: State = {
         }
 
         // Update decorations if something changes
-        if (
-            (
-                model.regions !== null &&
-                model.decorationTypes === null &&
-                model.regions.length > 0
-            ) ||
-            (
-                model.regions !== null &&
-                model.decorationTypes !== null &&
-                model.regions.length !== model.decorationTypes.length
-            )
-        ) {            
-            updateDecorationTypes(
-                model.regions,
-                model
-            );
-        }
+        // if (
+        //     (
+        //         model.regions !== null &&
+        //         model.decorationTypes === null &&
+        //         model.regions.length > 0
+        //     ) ||
+        //     (
+        //         model.regions !== null &&
+        //         model.decorationTypes !== null &&
+        //         model.regions.length !== model.decorationTypes.length
+        //     )
+        // ) {            
+        //     updateDecorationTypes(
+        //         model.regions,
+        //         model
+        //     );
+        // }
 
-        if (
-            model.decorationTypes !== null &&
-            model.decorationTypes.length > 0
-        ) {
-            // debugger;
-            model.decorationTypes.map(decorationType => decorationType.dispose());
-        }
+        // if (
+        //     model.decorationTypes !== null &&
+        //     model.decorationTypes.length > 0
+        // ) {
+        //     // debugger;
+        //     model.decorationTypes.map(decorationType => decorationType.dispose());
+        // }
     }
 };
 

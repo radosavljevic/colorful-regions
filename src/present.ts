@@ -9,7 +9,14 @@ import * as vscode from 'vscode';
 // Here you accept what will go into model
 
 export default function present(this: Model, data: PresentData) : void {
-    console.log('DATA', Object.keys(data).toString());
+    let regionsHash;
+    if (this.regions !== null && data.regions) {
+        regionsHash = this.regions
+            .map(region => region.title)
+            .toString();
+        console.log('REGION HASH', regionsHash);
+        debugger;
+    }
     
     if(data.extensionContext) {
         this.extensionContext = data.extensionContext;        
@@ -22,10 +29,9 @@ export default function present(this: Model, data: PresentData) : void {
     if(data.decorationTypes || data.decorationTypes === []) {
         this.decorationTypes = data.decorationTypes;
     }
-
-    debugger;
-
+    
     console.log('DATA', Object.keys(data).toString());
+    // debugger;
 
     state.render(this);
 }

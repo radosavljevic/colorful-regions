@@ -35,7 +35,8 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
     const regionsStart = comments
         .filter(comment => comment.value.indexOf('#region') !== -1)
         .map((comment, i) => {
-            let commentTitleWords: any[] = comment.value.split(' ');
+            const commentTitle = comment.value;
+            let commentTitleWords: any[] = commentTitle.split(' ');
             let commentColor = commentTitleWords
                 .slice(1, commentTitleWords.length)
                 .filter(word => isHexColor(word));
@@ -50,11 +51,13 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
             }
 
             const _comment: Comment = activeTextEditor.document.positionAt(comment.start);
-
-            // debugger;
+            
             if (color.color.length > 0) {
                 _comment.color = commentColor[0];
             }
+
+            // Add title
+            _comment.title = commentTitle;
 
             return _comment;
         });
@@ -69,7 +72,8 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
             return {
                 start: startRegion,
                 end: regionsEnd[i],
-                color: startRegion.color
+                color: startRegion.color,
+                title: startRegion.title            
             };
         });
 
