@@ -12,11 +12,14 @@ const init = (context:vscode.ExtensionContext, model: Model) => {
     model.present({extensionContext: context});
 };
 
+// Anemic action
 const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
+    console.log('ACTION UPDATE');
     model.present({});
 };
 
 const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
+    console.log('ACTION UPDATEREGION');
 
     // Find regions
     const AST = parse(activeTextEditor.document.getText());
@@ -43,17 +46,18 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
 
             // Detect if there's a color in the title,
             // otherwise default
-            let color;
+            let colorObject;
             if (commentColor.length) {
-                color = Color(commentColor[0]);
+                colorObject = Color(commentColor[0]);
             } else {
-                color = Color(`#${colors.colors()[i]}`);
+                colorObject = Color(`#${colors.colors()[i]}`);
             }
 
             const _comment: Comment = activeTextEditor.document.positionAt(comment.start);
-            
-            if (color.color.length > 0) {
-                _comment.color = commentColor[0];
+
+
+            if (colorObject.color.length > 0) {
+                _comment.color = colorObject.hex();
             }
 
             // Add title
@@ -73,7 +77,7 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
                 start: startRegion,
                 end: regionsEnd[i],
                 color: startRegion.color,
-                title: startRegion.title            
+                title: startRegion.title
             };
         });
 
@@ -84,6 +88,8 @@ const updateDecorationTypes = (
     regions: Region[],
     model: Model
 ) => {
+    console.log('ACTION UPDATEDECORATIONTYPES');
+
     const decorationTypes = regions.map(region => {
         const overviewRulerColor = region.color;
         const decorationType = vscode.window.createTextEditorDecorationType({

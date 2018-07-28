@@ -7,9 +7,8 @@ const colorRegions = (
     regions: Region[]
 ) => {
     regions.forEach(region => {
-        // debugger;
         const range = [new vscode.Range(region.start, region.end)];
-        const overviewRulerColor = region.color;
+        const overviewRulerColor = region.color;        
         const decorationType = vscode.window.createTextEditorDecorationType({
             overviewRulerColor
         });

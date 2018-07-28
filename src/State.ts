@@ -12,8 +12,7 @@ const state: State = {
     },
     render(model) {
         const ready = state.ready(model);
-        // debugger;
-        if (ready && model.regions !== null) {
+        if (ready && model.regions !== null) {            
             const activeTextEditor = vscode.window.activeTextEditor;
             colorRegions(activeTextEditor, model.regions);
         }

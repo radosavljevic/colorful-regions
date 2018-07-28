@@ -1,13 +1,13 @@
 import { Model, PresentData } from ".";
 import state from './State';
-import * as vscode from 'vscode';
 
-// export default function present(model: Model, data: any[]) {
-//     if ()    
-// }
-
-// Here you accept what will go into model
-
+/**
+ * Proposes changes to the the model
+ * which renders the new state
+ * 
+ * @param this Model to which the data is presented to
+ * @param data Payload of information which is presented to the model
+ */
 export default function present(this: Model, data: PresentData) : void {
     let regionsHash;
     if (this.regions !== null && data.regions) {
@@ -30,8 +30,8 @@ export default function present(this: Model, data: PresentData) : void {
         this.decorationTypes = data.decorationTypes;
     }
     
-    console.log('DATA', Object.keys(data).toString());
-    // debugger;
+    console.log('PRESENT DATA', Object.keys(data).toString());
+    debugger;
 
     state.render(this);
 }
