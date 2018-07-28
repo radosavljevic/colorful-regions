@@ -57,7 +57,7 @@ const state: State = {
             model.decorationTypes !== null &&
             model.decorationTypes.length > 0
         ) {
-            debugger;
+            // debugger;
             model.decorationTypes.map(decorationType => decorationType.dispose());
         }
     }

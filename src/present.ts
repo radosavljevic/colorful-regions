@@ -23,6 +23,8 @@ export default function present(this: Model, data: PresentData) : void {
         this.decorationTypes = data.decorationTypes;
     }
 
+    debugger;
+
     console.log('DATA', Object.keys(data).toString());
 
     state.render(this);
