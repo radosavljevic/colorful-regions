@@ -3,7 +3,7 @@ import * as babel from 'babel-eslint';
 import * as ColorScheme from 'color-scheme';
 import * as Color from 'color';
 import { isHexColor } from './util/helpers';
-import { Model, PositionWithColor, Region } from '.';
+import { Model, Comment, Region } from '.';
 
 const parse = babel.parse;
 const scheme = new ColorScheme;
@@ -49,7 +49,7 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
                 color = Color(`#${colors.colors()[i]}`);
             }
 
-            const _comment: PositionWithColor = activeTextEditor.document.positionAt(comment.start);
+            const _comment: Comment = activeTextEditor.document.positionAt(comment.start);
 
             // debugger;
             if (color.color.length > 0) {

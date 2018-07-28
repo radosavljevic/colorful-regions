@@ -1,11 +1,11 @@
 import * as vscode from 'vscode'
 
-type PresentData = {
+export type PresentData = {
     [key: string]: any
 };
-type Present = (this: Model, data: PresentData) => void
+export type Present = (this: Model, data: PresentData) => void
 
-interface Model {
+export interface Model {
     extensionContext: vscode.ExtensionContext;
     activeTextEditor: vscode.TextEditor;
     regions: Region[];
@@ -13,19 +13,21 @@ interface Model {
     present: Present
 }
 
-interface State {
+export interface State {
     render: (model: Model) => void;
     nextState: (model: Model) => void;
     ready: (model: Model) => boolean;
 
 }
 
-interface PositionWithColor extends vscode.Position {
+export interface Comment extends vscode.Position {
     color?: string;
+    title?: string;
 }
 
-interface Region {
+export interface Region {
     start: vscode.Position;
     end: vscode.Position;
     color: string;
+    title: string;
 }

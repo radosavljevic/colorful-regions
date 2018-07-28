@@ -1,4 +1,4 @@
-import { Model, PositionWithColor } from "..";
+import { Model, Comment } from "..";
 import * as vscode from 'vscode';
 // import {} from 'vscode/src/editor/contrib/folding/indentRangeProvider';
 import * as babel from 'babel-eslint';
@@ -26,7 +26,7 @@ const colorRegions = (model: Model) => {
                 .slice(1, commentTitleWords.length)
                 .filter(word => isHexColor(word));
 
-            const _comment: PositionWithColor = activeTextEditor.document.positionAt(comment.start);
+            const _comment: Comment = activeTextEditor.document.positionAt(comment.start);
 
             if (commentColor.length > 0) {
                 _comment.color = commentColor[0];
