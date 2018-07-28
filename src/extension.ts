@@ -2,13 +2,14 @@
 import * as vscode from 'vscode';
 import { Model } from '.';
 import present from './present';
-import { init, update } from './actions';
+import { init, updateRegions } from './actions';
 
 const model: Model = {
     extensionContext: null,
     activeTextEditor: null,    
     decorationTypes: null,
     regions: null,
+    enquedActions: [],
     present
 };
 
@@ -21,5 +22,6 @@ export function deactivate() {
 }
 
 vscode.workspace.onDidChangeTextDocument(evt => {
-    update(null, model);
+    const activeTextEditor = vscode.window.activeTextEditor;
+    updateRegions(activeTextEditor, model);
 });

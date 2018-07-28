@@ -8,17 +8,17 @@ import { Model, Comment, Region } from '.';
 const parse = babel.parse;
 const scheme = new ColorScheme;
 
-const init = (context:vscode.ExtensionContext, model: Model) => {
+export const init = (context:vscode.ExtensionContext, model: Model) => {
     model.present({extensionContext: context});
 };
 
 // Anemic action
-const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
+export const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
     console.log('ACTION UPDATE');
     model.present({});
 };
 
-const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
+export const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
     console.log('ACTION UPDATEREGION');
 
     // Find regions
@@ -84,14 +84,17 @@ const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
     model.present({ regions });
 };
 
-const updateDecorationTypes = (
+export const updateDecorationTypes = (
     regions: Region[],
     model: Model
 ) => {
     console.log('ACTION UPDATEDECORATIONTYPES');
 
+    // debugger;
+
     const decorationTypes = regions.map(region => {
         const overviewRulerColor = region.color;
+        // console.log('REGION COLOR', overviewRulerColor);
         const decorationType = vscode.window.createTextEditorDecorationType({
             overviewRulerColor
         });
@@ -100,12 +103,7 @@ const updateDecorationTypes = (
     });
 
     // decorationTypes.map(decorationType => decorationType.dispose());
-    model.present({ decorationTypes });
-};
 
-export {
-    init,
-    update,
-    updateDecorationTypes,
-    updateRegions
+    // decorationTypes.map(decorationType => decorationType.dispose());
+    model.present({ decorationTypes, regions });
 };

@@ -5,11 +5,17 @@ export type PresentData = {
 };
 export type Present = (this: Model, data: PresentData) => void
 
+interface EnquedAction {
+    run: (...args: any[]) => void;
+    args?: any[];
+}
+
 export interface Model {
     extensionContext: vscode.ExtensionContext;
     activeTextEditor: vscode.TextEditor;
     regions: Region[];
     decorationTypes: vscode.TextEditorDecorationType[];
+    enquedActions: EnquedAction[];
     present: Present
 }
 
@@ -31,3 +37,5 @@ export interface Region {
     color: string;
     title: string;
 }
+
+// TODO: add possible data types for the present function

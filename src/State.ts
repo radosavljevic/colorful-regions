@@ -34,23 +34,29 @@ const state: State = {
         }
 
         // Update decorations if something changes
-        // if (
-        //     (
-        //         model.regions !== null &&
-        //         model.decorationTypes === null &&
-        //         model.regions.length > 0
-        //     ) ||
-        //     (
-        //         model.regions !== null &&
-        //         model.decorationTypes !== null &&
-        //         model.regions.length !== model.decorationTypes.length
-        //     )
-        // ) {            
-        //     updateDecorationTypes(
-        //         model.regions,
-        //         model
-        //     );
-        // }
+        if (
+            (
+                model.regions !== null &&
+                model.decorationTypes === null &&
+                model.regions.length > 0
+            ) ||
+            (
+                model.regions !== null &&
+                model.decorationTypes !== null &&
+                model.regions.length !== model.decorationTypes.length
+            )
+        ) {            
+            updateDecorationTypes(
+                model.regions,
+                model
+            );
+        }
+
+        // Run and dequeue enqued actions
+        if (model.enquedActions.length > 0) {
+            const action = model.enquedActions.shift();
+            setTimeout(() => action.run(...action.args), 0);
+        }
 
         // if (
         //     model.decorationTypes !== null &&
@@ -59,6 +65,12 @@ const state: State = {
         //     // debugger;
         //     model.decorationTypes.map(decorationType => decorationType.dispose());
         // }
+
+        // run updateRegions when regions are changed
+        if (state.ready(model)) {
+            const activeTextEditor = vscode.window.activeTextEditor;
+
+        }
     }
 };
 

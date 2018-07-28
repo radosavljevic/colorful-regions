@@ -1,5 +1,7 @@
 import { Model, PresentData } from ".";
 import state from './State';
+import { updateDecorationTypes } from "./actions";
+import * as vscode from 'vscode';
 
 /**
  * Proposes changes to the the model
@@ -9,13 +11,33 @@ import state from './State';
  * @param data Payload of information which is presented to the model
  */
 export default function present(this: Model, data: PresentData) : void {
-    let regionsHash;
+    
     if (this.regions !== null && data.regions) {
-        regionsHash = this.regions
+        let prevRegionsHash;
+        let nextRegionHash;
+
+        prevRegionsHash = this.regions
             .map(region => region.title)
             .toString();
-        console.log('REGION HASH', regionsHash);
-        debugger;
+
+        nextRegionHash = data.regions
+            .map(region => region.title)
+            .toString();
+
+        // console.log('REGION HASH', prevRegionsHash, nextRegionHash);
+
+        if (prevRegionsHash !== nextRegionHash) {
+            console.log('NOW WE SHOULD UPDATE');
+            const activeTextEditor = vscode.window.activeTextEditor;
+            this.regions = data.regions;
+            this.enquedActions.push({
+                run: updateDecorationTypes,
+                args: [data.regions, this]
+            });
+            this.regions = data.regions;
+        }
+
+        // debugger;#
     }
     
     if(data.extensionContext) {
@@ -31,7 +53,7 @@ export default function present(this: Model, data: PresentData) : void {
     }
     
     console.log('PRESENT DATA', Object.keys(data).toString());
-    debugger;
+    // debugger;
 
     state.render(this);
 }
