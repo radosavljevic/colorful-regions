@@ -39,6 +39,7 @@ const state: State = {
             model.decorationTypes === [] &&
             model.regions.length > 0
         ) {
+            console.log('NAP UPDATEREGIONS');
             const activeTextEditor = vscode.window.activeTextEditor;
             // updateDecorationTypes(
             //     model.regions,
@@ -47,24 +48,32 @@ const state: State = {
             updateRegions(activeTextEditor, model);
         }
 
+        // Run update decorations for first time
+        if (
+            model.regions &&
+            model.regions.length &&
+            model.decorationTypes === null
+        ) {
+            updateDecorationTypes(model.regions, model);
+        }
+
+        // Run update decorations when decorations is out of sync with regions
+        if (
+            model.regions &&
+            model.regions.length &&
+            model.decorationTypes &&
+            model.decorationTypes.length === 0
+        ) {
+            const activeTextEditor = vscode.window.activeTextEditor;
+            updateRegions(activeTextEditor, model);
+
+            // TODO: updateRegions should return decoration types also
+        }
+
         // Run and dequeue enqued actions
         if (model.enquedActions.length > 0) {
             const action = model.enquedActions.shift();
             setTimeout(() => action.run(...action.args), 0);
-        }
-
-        // if (
-        //     model.decorationTypes !== null &&
-        //     model.decorationTypes.length > 0
-        // ) {
-        //     // debugger;
-        //     model.decorationTypes.map(decorationType => decorationType.dispose());
-        // }
-
-        // run updateRegions when regions are changed
-        if (state.ready(model)) {
-            const activeTextEditor = vscode.window.activeTextEditor;
-
         }
     }
 };
