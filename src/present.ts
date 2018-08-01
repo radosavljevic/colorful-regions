@@ -1,6 +1,9 @@
 import { Model, PresentData } from ".";
 import state from './State';
-import { updateDecorationTypes } from "./actions";
+import {
+    updateDecorationTypes,
+    clearDecorations
+} from "./actions";
 import * as vscode from 'vscode';
 
 /**
@@ -27,14 +30,11 @@ export default function present(this: Model, data: PresentData) : void {
         // console.log('REGION HASH', prevRegionsHash, nextRegionHash);
 
         if (prevRegionsHash !== nextRegionHash) {
-            console.log('NOW WE SHOULD UPDATE');
-            const activeTextEditor = vscode.window.activeTextEditor;
-            this.regions = data.regions;
+            console.log('NOW WE SHOULD UPDATE');            
             this.enquedActions.push({
-                run: updateDecorationTypes,
-                args: [data.regions, this]
-            });
-            this.regions = data.regions;
+                run: clearDecorations,
+                args: [this.decorationTypes, this]
+            });            
         }
 
         // debugger;#
@@ -50,6 +50,10 @@ export default function present(this: Model, data: PresentData) : void {
 
     if(data.decorationTypes || data.decorationTypes === []) {
         this.decorationTypes = data.decorationTypes;
+    }
+
+    if(data.clearDecorations) {
+        this.decorationTypes = [];
     }
     
     console.log('PRESENT DATA', Object.keys(data).toString());

@@ -15,6 +15,7 @@ export const init = (context:vscode.ExtensionContext, model: Model) => {
 // Anemic action
 export const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
     console.log('ACTION UPDATE');
+    debugger;
     model.present({});
 };
 
@@ -106,4 +107,15 @@ export const updateDecorationTypes = (
 
     // decorationTypes.map(decorationType => decorationType.dispose());
     model.present({ decorationTypes, regions });
+};
+
+export const clearDecorations = (decorationTypes: vscode.TextEditorDecorationType[] ,model: Model) => {
+    console.log('CLEAR DECORATIONS');
+    // debugger;
+    if (decorationTypes === null) {
+        return model.present({ clearDecorations: [] });
+    }
+
+    decorationTypes.map(d => d.dispose());
+    model.present({ clearDecorations: [] });
 };

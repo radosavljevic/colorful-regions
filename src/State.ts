@@ -12,7 +12,7 @@ const state: State = {
     },
     render(model) {
         const ready = state.ready(model);
-        if (ready && model.regions !== null) {            
+        if (ready && model.regions !== null) {
             const activeTextEditor = vscode.window.activeTextEditor;
             colorRegions(activeTextEditor, model.regions);
         }
@@ -35,21 +35,16 @@ const state: State = {
 
         // Update decorations if something changes
         if (
-            (
-                model.regions !== null &&
-                model.decorationTypes === null &&
-                model.regions.length > 0
-            ) ||
-            (
-                model.regions !== null &&
-                model.decorationTypes !== null &&
-                model.regions.length !== model.decorationTypes.length
-            )
-        ) {            
-            updateDecorationTypes(
-                model.regions,
-                model
-            );
+            model.regions !== null &&
+            model.decorationTypes === [] &&
+            model.regions.length > 0
+        ) {
+            const activeTextEditor = vscode.window.activeTextEditor;
+            // updateDecorationTypes(
+            //     model.regions,
+            //     model
+            // );
+            updateRegions(activeTextEditor, model);
         }
 
         // Run and dequeue enqued actions
