@@ -14,7 +14,7 @@ const state: State = {
         const ready = state.ready(model);
         if (ready && model.regions !== null) {
             const activeTextEditor = model.activeTextEditor;
-            colorRegions(activeTextEditor, model.regions);
+            colorRegions(activeTextEditor, model.decorationTypes, model.regions);
         }
 
         state.nextState(model);
@@ -30,7 +30,13 @@ const state: State = {
         if (model.enquedActions.length > 0) {
             const action = model.enquedActions.pop();
             const args = action.args;
-            action.run(args);
+            try {
+                action.run(args);
+
+            } catch (error) {
+                debugger;
+            }
+            // action.run(args);
         }
 
         

@@ -101,7 +101,6 @@ export const updateDecorationTypes = (regions: Region[], model: Model) => {
 
     const decorationTypes = regions.map(region => {
         const overviewRulerColor = region.color;
-        // console.log('REGION COLOR', overviewRulerColor);
         const decorationType = vscode.window.createTextEditorDecorationType({
             overviewRulerColor
         });
@@ -109,24 +108,10 @@ export const updateDecorationTypes = (regions: Region[], model: Model) => {
         return decorationType;
     });
 
-    // decorationTypes.map(decorationType => decorationType.dispose());
-
-    // decorationTypes.map(decorationType => decorationType.dispose());
     model.present({ decorationTypes });
-};
-
-export const clearDecorations = (decorationTypes: vscode.TextEditorDecorationType[] ,model: Model) => {
-    console.log('CLEAR DECORATIONS');
-    // debugger;
-    if (decorationTypes === null) {
-        return model.present({ clearDecorations: [] });
-    }
-
-    decorationTypes.map(d => d.dispose());
-    model.present({ clearDecorations: [] });
 };
 
 export const disposeDecorationTypes = (decorationTypes: vscode.TextEditorDecorationType[], model: Model) => {
     decorationTypes.map(d => d.dispose());
     model.present({ disposeDecorationTypes: true });
-}
+};

@@ -4,16 +4,12 @@ import * as vscode from 'vscode';
 
 const colorRegions = (
     activeTextEditor: vscode.TextEditor,
+    decorationTypes: vscode.TextEditorDecorationType[],
     regions: Region[]
 ) => {
-    regions.forEach(region => {
+    regions.forEach((region,i) => {
         const range = [new vscode.Range(region.start, region.end)];
-        const overviewRulerColor = region.color;        
-        const decorationType = vscode.window.createTextEditorDecorationType({
-            overviewRulerColor
-        });
-
-        activeTextEditor.setDecorations(decorationType, range);
+        activeTextEditor.setDecorations(decorationTypes[i], range);
     });
 };
 

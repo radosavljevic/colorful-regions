@@ -1,11 +1,6 @@
 import { Model, PresentData } from ".";
 import state from './State';
 import { updateDecorationTypes, disposeDecorationTypes } from "./actions";
-// import {
-//     updateDecorationTypes,
-//     clearDecorations
-// } from "./actions";
-// import * as vscode from 'vscode';
 
 /**
  * Proposes changes to the the model
@@ -15,31 +10,6 @@ import { updateDecorationTypes, disposeDecorationTypes } from "./actions";
  * @param data Payload of information which is presented to the model
  */
 export default function present(this: Model, data: PresentData) : void {
-    
-    // if (this.regions !== null && data.regions) {
-    //     let prevRegionsHash;
-    //     let nextRegionHash;
-
-    //     prevRegionsHash = this.regions
-    //         .map(region => region.title)
-    //         .toString();
-
-    //     nextRegionHash = data.regions
-    //         .map(region => region.title)
-    //         .toString();
-
-    //     // console.log('REGION HASH', prevRegionsHash, nextRegionHash);
-
-    //     if (prevRegionsHash !== nextRegionHash) {
-    //         console.log('NOW WE SHOULD UPDATE');            
-    //         this.enquedActions.push({
-    //             run: clearDecorations,
-    //             args: [this.decorationTypes, this]
-    //         });            
-    //     }
-
-    //     // debugger;#
-    // }
     
     if(data.extensionContext) {
         this.extensionContext = data.extensionContext;        
@@ -72,7 +42,6 @@ export default function present(this: Model, data: PresentData) : void {
 
     if(data.activeTextEditor) {
         this.activeTextEditor = data.activeTextEditor;
-        this.enquedActions.push({run: () => console.log('enqued action... from active text editor')});
     }
     
     console.log('PRESENT DATA', Object.keys(data).toString());
@@ -80,3 +49,29 @@ export default function present(this: Model, data: PresentData) : void {
 
     state.render(this);
 }
+
+
+// if (this.regions !== null && data.regions) {
+//     let prevRegionsHash;
+//     let nextRegionHash;
+
+//     prevRegionsHash = this.regions
+//         .map(region => region.title)
+//         .toString();
+
+//     nextRegionHash = data.regions
+//         .map(region => region.title)
+//         .toString();
+
+//     // console.log('REGION HASH', prevRegionsHash, nextRegionHash);
+
+//     if (prevRegionsHash !== nextRegionHash) {
+//         console.log('NOW WE SHOULD UPDATE');            
+//         this.enquedActions.push({
+//             run: clearDecorations,
+//             args: [this.decorationTypes, this]
+//         });            
+//     }
+
+//     // debugger;#
+// }
