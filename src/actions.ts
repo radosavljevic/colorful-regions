@@ -8,8 +8,17 @@ import { Model, Comment, Region } from '.';
 const parse = babel.parse;
 const scheme = new ColorScheme;
 
+
 export const init = (context:vscode.ExtensionContext, model: Model) => {
-    model.present({extensionContext: context});
+    model.present({ extensionContext: context });
+};
+
+export const updateTextDocument = (textDocument: vscode.TextDocument, model: Model) => {
+    model.present({ textDocument });
+};
+
+export const updateActiveTextEditor = (activeTextEditor: vscode.TextEditor, model: Model) => {
+    model.present({ activeTextEditor });
 };
 
 // Anemic action
@@ -19,7 +28,7 @@ export const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
     model.present({});
 };
 
-export const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model) => {
+export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.TextDocumentChangeEvent, model: Model) => {
     console.log('ACTION UPDATEREGION');
 
     // Find regions
@@ -85,10 +94,7 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor ,model: Model)
     model.present({ regions });
 };
 
-export const updateDecorationTypes = (
-    regions: Region[],
-    model: Model
-) => {
+export const updateDecorationTypes = (regions: Region[], model: Model) => {
     console.log('ACTION UPDATEDECORATIONTYPES');
 
     // debugger;
@@ -106,7 +112,7 @@ export const updateDecorationTypes = (
     // decorationTypes.map(decorationType => decorationType.dispose());
 
     // decorationTypes.map(decorationType => decorationType.dispose());
-    model.present({ decorationTypes, regions });
+    model.present({ decorationTypes });
 };
 
 export const clearDecorations = (decorationTypes: vscode.TextEditorDecorationType[] ,model: Model) => {
@@ -119,3 +125,8 @@ export const clearDecorations = (decorationTypes: vscode.TextEditorDecorationTyp
     decorationTypes.map(d => d.dispose());
     model.present({ clearDecorations: [] });
 };
+
+export const disposeDecorationTypes = (decorationTypes: vscode.TextEditorDecorationType[], model: Model) => {
+    decorationTypes.map(d => d.dispose());
+    model.present({ disposeDecorationTypes: true });
+}

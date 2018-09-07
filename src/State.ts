@@ -1,80 +1,39 @@
 import * as vscode from 'vscode';
 import { State } from '.';
 import colorRegions from './reactors/colorRegions';
-import { updateDecorationTypes, updateRegions } from './actions';
+import { updateActiveTextEditor } from './actions';
 
 
 const state: State = {
     ready(model) {
-        if (model.extensionContext) {
+        if (model.extensionContext && model.activeTextEditor) {
             return true;
         }
     },
     render(model) {
         const ready = state.ready(model);
         if (ready && model.regions !== null) {
-            const activeTextEditor = vscode.window.activeTextEditor;
+            const activeTextEditor = model.activeTextEditor;
             colorRegions(activeTextEditor, model.regions);
         }
 
         state.nextState(model);
     },
     nextState(model) {
-        // debugger;
-        // Run update regions for the first time
-        // const activeTextEditor = vscode.window.activeTextEditor;
 
-        if (
-            state.ready(model) &&
-            model.regions === null
-
-        ) {
-            const activeTextEditor = vscode.window.activeTextEditor;
-            updateRegions(activeTextEditor, model);
+        if (model.extensionContext && !model.activeTextEditor) {
+            model.activeTextEditor = vscode.window.activeTextEditor;
+            updateActiveTextEditor(vscode.window.activeTextEditor, model);
         }
 
-        // Update decorations if something changes
-        if (
-            model.regions !== null &&
-            model.decorationTypes === [] &&
-            model.regions.length > 0
-        ) {
-            console.log('NAP UPDATEREGIONS');
-            const activeTextEditor = vscode.window.activeTextEditor;
-            // updateDecorationTypes(
-            //     model.regions,
-            //     model
-            // );
-            updateRegions(activeTextEditor, model);
-        }
-
-        // Run update decorations for first time
-        if (
-            model.regions &&
-            model.regions.length &&
-            model.decorationTypes === null
-        ) {
-            updateDecorationTypes(model.regions, model);
-        }
-
-        // Run update decorations when decorations is out of sync with regions
-        if (
-            model.regions &&
-            model.regions.length &&
-            model.decorationTypes &&
-            model.decorationTypes.length === 0
-        ) {
-            const activeTextEditor = vscode.window.activeTextEditor;
-            updateRegions(activeTextEditor, model);
-
-            // TODO: updateRegions should return decoration types also
-        }
-
-        // Run and dequeue enqued actions
+        // Run enqued actions and get rid of them
         if (model.enquedActions.length > 0) {
-            const action = model.enquedActions.shift();
-            setTimeout(() => action.run(...action.args), 0);
+            const action = model.enquedActions.pop();
+            const args = action.args;
+            action.run(args);
         }
+
+        
     }
 };
 
