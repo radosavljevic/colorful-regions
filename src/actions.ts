@@ -23,13 +23,10 @@ export const updateActiveTextEditor = (activeTextEditor: vscode.TextEditor, mode
 
 // Anemic action
 export const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
-    console.log('ACTION UPDATE');
-    debugger;
     model.present({});
 };
 
 export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.TextDocumentChangeEvent, model: Model) => {
-    console.log('ACTION UPDATEREGION');
 
     // Find regions
     const AST = parse(activeTextEditor.document.getText());
@@ -95,12 +92,13 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
 };
 
 export const updateDecorationTypes = (regions: Region[], model: Model) => {
-    console.log('ACTION UPDATEDECORATIONTYPES');
-
-    // debugger;
+    if (!regions) {
+        return;
+    }
 
     const decorationTypes = regions.map(region => {
         const overviewRulerColor = region.color;
+        console.log('⛅', overviewRulerColor);
         const decorationType = vscode.window.createTextEditorDecorationType({
             overviewRulerColor
         });
@@ -112,6 +110,12 @@ export const updateDecorationTypes = (regions: Region[], model: Model) => {
 };
 
 export const disposeDecorationTypes = (decorationTypes: vscode.TextEditorDecorationType[], model: Model) => {
-    decorationTypes.map(d => d.dispose());
+    if (!decorationTypes) {
+        model.present({ disposeDecorationTypes: true });
+        return;
+    }
+
+    // Dispose all decoration types
     model.present({ disposeDecorationTypes: true });
+    decorationTypes.map(d => d.dispose());
 };

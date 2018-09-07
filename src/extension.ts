@@ -21,10 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
 }
 
-// vscode.workspace.onDidChangeTextDocument(evt => {
-//     const activeTextEditor = vscode.window.activeTextEditor;
-//     updateRegions(activeTextEditor, model);
-// });
+
 
 vscode.workspace.onDidChangeTextDocument(textDocumentChangeEvt => {
     const activeTextEditor = model.activeTextEditor;
@@ -35,13 +32,6 @@ vscode.window.onDidChangeActiveTextEditor(textEditor => {
     updateActiveTextEditor(textEditor, model)
 });
 
-// onDidChangeTextEditorSelection => updateRegions
-// vscode.workspace.onDid(evt => {
-//     const activeTextEditor = vscode.window.activeTextEditor;
-//     updateRegions(activeTextEditor,evt ,model);
-// });
-
-vscode
-    .workspace
-    .onDidOpenTextDocument(textDocument => updateTextDocument(textDocument, model));
-
+vscode.workspace.onDidOpenTextDocument(textDocument => {
+    updateTextDocument(textDocument, model)
+});

@@ -31,7 +31,7 @@ const state: State = {
             const action = model.enquedActions.pop();
             const args = action.args;
             try {
-                action.run(args);
+                action.run(...args);
 
             } catch (error) {
                 debugger;

@@ -7,6 +7,9 @@ const colorRegions = (
     decorationTypes: vscode.TextEditorDecorationType[],
     regions: Region[]
 ) => {
+    if (!decorationTypes || (regions.length !== decorationTypes.length)) {
+        return;
+    }
     regions.forEach((region,i) => {
         const range = [new vscode.Range(region.start, region.end)];
         activeTextEditor.setDecorations(decorationTypes[i], range);

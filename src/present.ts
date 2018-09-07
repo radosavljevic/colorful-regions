@@ -19,7 +19,7 @@ export default function present(this: Model, data: PresentData) : void {
         this.regions = data.regions;
         this.enquedActions.push({
             run: disposeDecorationTypes,
-            args: this.decorationTypes
+            args: [this.decorationTypes, this]
         });
     }
 
@@ -31,12 +31,11 @@ export default function present(this: Model, data: PresentData) : void {
         this.decorationTypes = [];
         this.enquedActions.push({
             run: updateDecorationTypes,
-            args: data.regions
+            args: [this.regions, this]
         });
     }
 
     if(data.decorationTypes) {
-        console.log('YESSS DT');
         this.decorationTypes = data.decorationTypes;
     }
 
@@ -45,33 +44,6 @@ export default function present(this: Model, data: PresentData) : void {
     }
     
     console.log('PRESENT DATA', Object.keys(data).toString());
-    // debugger;
 
     state.render(this);
 }
-
-
-// if (this.regions !== null && data.regions) {
-//     let prevRegionsHash;
-//     let nextRegionHash;
-
-//     prevRegionsHash = this.regions
-//         .map(region => region.title)
-//         .toString();
-
-//     nextRegionHash = data.regions
-//         .map(region => region.title)
-//         .toString();
-
-//     // console.log('REGION HASH', prevRegionsHash, nextRegionHash);
-
-//     if (prevRegionsHash !== nextRegionHash) {
-//         console.log('NOW WE SHOULD UPDATE');            
-//         this.enquedActions.push({
-//             run: clearDecorations,
-//             args: [this.decorationTypes, this]
-//         });            
-//     }
-
-//     // debugger;#
-// }
