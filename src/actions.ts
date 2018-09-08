@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as babel from 'babel-eslint';
 import * as ColorScheme from 'color-scheme';
 import * as Color from 'color';
-import { isHexColor } from './util/helpers';
+import { isColor } from './util/helpers';
 import { Model, Comment, Region, Settings } from '.';
 
 // const settings = {
@@ -51,15 +51,15 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, settings: Set
         .map((comment, i) => {
             const commentTitle = comment.value;
             let commentTitleWords: any[] = commentTitle.split(' ');
-            let commentColor = commentTitleWords
+            let commentColor: string[] = commentTitleWords
                 .slice(1, commentTitleWords.length)
-                .filter(word => isHexColor(word));
+                .filter(word => isColor(word));
 
             // Detect if there's a color in the title,
             // otherwise default
             let colorObject;
             if (commentColor.length) {
-                colorObject = Color(commentColor[0]);
+                colorObject = Color(commentColor[0].toLowerCase());
             } else if (settings.assignPredefinedColors) {
                 colorObject = Color(`#${colors.colors()[i + 1]}`);
                 // colorObject = Color(colors[i]);
