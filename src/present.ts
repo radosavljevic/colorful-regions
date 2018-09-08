@@ -1,6 +1,6 @@
 import { Model, PresentData } from ".";
 import state from './State';
-import { updateDecorationTypes, disposeDecorationTypes } from "./actions";
+import { updateDecorationTypes, disposeDecorationTypes, updateRegions } from "./actions";
 
 /**
  * Proposes changes to the the model
@@ -45,6 +45,10 @@ export default function present(this: Model, data: PresentData) : void {
 
     if(data.activeTextEditor) {
         this.activeTextEditor = data.activeTextEditor;
+        this.enquedActions.push({
+            run: updateRegions,
+            args: [this.activeTextEditor, this.settings, this]
+        });
     }
     
     console.log('PRESENT DATA', Object.keys(data).toString());
