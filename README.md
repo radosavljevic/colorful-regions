@@ -2,6 +2,8 @@
 
 Create color regions for your blocks of code and navigate easily. Currently it only supports JavaScript.
 
+![Colorful Regions Demo](/images/colorful-regions-2.gif)
+
 ## How to use it
 
 One option would be to use hex like this:
