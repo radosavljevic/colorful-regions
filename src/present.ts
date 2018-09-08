@@ -1,5 +1,5 @@
 import { Model, PresentData } from ".";
-import state from './State';
+import state from './state';
 import { updateDecorationTypes, disposeDecorationTypes, updateRegions } from "./actions";
 
 /**
@@ -51,7 +51,7 @@ export default function present(this: Model, data: PresentData) : void {
         });
     }
     
-    console.log('PRESENT DATA', Object.keys(data).toString());
+    // console.log('PRESENT DATA', Object.keys(data).toString());
 
     state.render(this);
 }
