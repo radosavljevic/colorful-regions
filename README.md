@@ -4,6 +4,8 @@ Create color regions for your blocks of code and navigate easily.
 
 
 ## Release Notes
+### 1.0.1
+Update vscode to latest version.
 
 ### 1.0.0
 
