@@ -98,8 +98,6 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, settings: Set
             };
         });
 
-        console.log('REGIONS', regions);
-
     model.present({ regions });
 };
 
