@@ -15,6 +15,10 @@ export default function present(this: Model, data: PresentData) : void {
         this.extensionContext = data.extensionContext;        
     }
 
+    if(data.settings) {
+        this.settings = data.settings;
+    }
+
     if(data.regions || data.region === []) {
         this.regions = data.regions;
         this.enquedActions.push({

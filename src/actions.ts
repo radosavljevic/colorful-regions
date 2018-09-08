@@ -3,17 +3,17 @@ import * as babel from 'babel-eslint';
 import * as ColorScheme from 'color-scheme';
 import * as Color from 'color';
 import { isHexColor } from './util/helpers';
-import { Model, Comment, Region } from '.';
+import { Model, Comment, Region, Settings } from '.';
 
-const settings = {
-    assignDefaultColors: false
-};
+// const settings = {
+//     assignDefaultColors: false
+// };
 
 const parse = babel.parse;
 const scheme = new ColorScheme;
 
 
-export const init = (context:vscode.ExtensionContext, model: Model) => {
+export const init = (context:vscode.ExtensionContext, settings: Settings, model: Model) => {
     model.present({ extensionContext: context });
 };
 
@@ -30,7 +30,7 @@ export const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
     model.present({});
 };
 
-export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.TextDocumentChangeEvent, model: Model) => {
+export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.TextDocumentChangeEvent, settings: Settings, model: Model) => {
 
     // Find regions
     const AST = parse(activeTextEditor.document.getText());
@@ -60,7 +60,7 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
             let colorObject;
             if (commentColor.length) {
                 colorObject = Color(commentColor[0]);
-            } else if (settings.assignDefaultColors) {
+            } else if (settings.assignPredefinedColors) {
                 colorObject = Color(`#${colors.colors()[i + 1]}`);
                 // colorObject = Color(colors[i]);
             }
@@ -69,9 +69,12 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
 
 
             if (colorObject && colorObject.color.length > 0) {
-                _comment.color = colorObject.alpha(0.3).rgb().toString();
+                _comment.color = colorObject
+                    .alpha(settings.transparencyAmount)
+                    .rgb()
+                    .toString();
             } else {
-                _comment.color = 'rgba(0, 0, 0, 0)';
+                _comment.color = settings.defaultColor;
             }
 
             // Add title

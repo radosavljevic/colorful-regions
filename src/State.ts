@@ -30,15 +30,8 @@ const state: State = {
         if (model.enquedActions.length > 0) {
             const action = model.enquedActions.pop();
             const args = action.args;
-            try {
-                action.run(...args);
-
-            } catch (error) {
-                debugger;
-            }
-            // action.run(args);
+            action.run(...args);
         }
-
         
     }
 };
