@@ -5,6 +5,10 @@ import * as Color from 'color';
 import { isHexColor } from './util/helpers';
 import { Model, Comment, Region } from '.';
 
+const settings = {
+    assignDefaultColors: false
+};
+
 const parse = babel.parse;
 const scheme = new ColorScheme;
 
@@ -56,7 +60,7 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
             let colorObject;
             if (commentColor.length) {
                 colorObject = Color(commentColor[0]);
-            } else {
+            } else if (settings.assignDefaultColors) {
                 colorObject = Color(`#${colors.colors()[i + 1]}`);
                 // colorObject = Color(colors[i]);
             }
@@ -64,8 +68,10 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
             const _comment: Comment = activeTextEditor.document.positionAt(comment.start);
 
 
-            if (colorObject.color.length > 0) {
+            if (colorObject && colorObject.color.length > 0) {
                 _comment.color = colorObject.alpha(0.3).rgb().toString();
+            } else {
+                _comment.color = 'rgba(0, 0, 0, 0)';
             }
 
             // Add title
