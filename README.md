@@ -9,7 +9,7 @@ Update vscode to latest version.
 
 ### 1.0.0
 
-Initial release of the extension. People can add colors to their regions by either appending hex code or using CSS color names, i.e
+Initial release of the extension. People can add colors to their regions by either appending a hex code or using CSS color names, i.e
 
 
 One option would be to use hex like this:
