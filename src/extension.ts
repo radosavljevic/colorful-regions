@@ -32,7 +32,7 @@ export function deactivate() {
 
 vscode.workspace.onDidChangeTextDocument(textDocumentChangeEvt => {
     const activeTextEditor = model.activeTextEditor;
-    updateRegions(activeTextEditor, textDocumentChangeEvt, model.settings, model);
+    updateRegions(activeTextEditor, model.settings, model);
 });
 
 vscode.window.onDidChangeActiveTextEditor(textEditor => {

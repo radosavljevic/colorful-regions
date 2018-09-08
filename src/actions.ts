@@ -30,7 +30,7 @@ export const update = (evt: vscode.TextDocumentChangeEvent, model: Model) => {
     model.present({});
 };
 
-export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.TextDocumentChangeEvent, settings: Settings, model: Model) => {
+export const updateRegions = (activeTextEditor: vscode.TextEditor, settings: Settings, model: Model) => {
 
     // Find regions
     const AST = parse(activeTextEditor.document.getText());
@@ -98,6 +98,8 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
             };
         });
 
+        console.log('REGIONS', regions);
+
     model.present({ regions });
 };
 
@@ -108,7 +110,6 @@ export const updateDecorationTypes = (regions: Region[], model: Model) => {
 
     const decorationTypes = regions.map(region => {
         const overviewRulerColor = region.color;
-        console.log('⛅', overviewRulerColor);
         const decorationType = vscode.window.createTextEditorDecorationType({
             overviewRulerColor
         });

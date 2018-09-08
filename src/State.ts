@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { State } from '.';
 import colorRegions from './reactors/colorRegions';
-import { updateActiveTextEditor } from './actions';
+import { updateActiveTextEditor, updateRegions } from './actions';
 
 
 const state: State = {
@@ -24,6 +24,10 @@ const state: State = {
         if (model.extensionContext && !model.activeTextEditor) {
             model.activeTextEditor = vscode.window.activeTextEditor;
             updateActiveTextEditor(vscode.window.activeTextEditor, model);
+        }
+
+        if (state.ready(model) && !model.regions) {
+            updateRegions(model.activeTextEditor, model.settings, model);
         }
 
         // Run enqued actions and get rid of them
