@@ -2,7 +2,10 @@
     "name": "colorful-regions",
     "displayName": "Colorful Regions",
     "description": "Colorize your code regions",
-    "version": "0.0.1",
+    "author": {
+        "name": "Slobodan Radosavljevic"
+    },
+    "version": "1.0.0",
     "publisher": "hiduk",
     "engines": {
         "vscode": "^1.18.0"
@@ -17,14 +20,6 @@
         "onLanguage:javascriptreact"
     ],
     "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.sayHello",
-                "title": "Hello World"
-            }
-        ]
-    },
     "scripts": {
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
