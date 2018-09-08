@@ -1,6 +1,6 @@
 # Colorful regions
 
-Helping people and teams to easily navigate trough the code.
+Create color regions for your blocks of code and navigate easily.
 
 
 ## Release Notes
