@@ -38,9 +38,9 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
     }
 
     const colors = scheme
-        .from_hue(21)
+        .from_hue(0)
         .scheme('tetrade')
-        .variation('pastel');
+        .variation('light');
 
     const regionsStart = comments
         .filter(comment => comment.value.indexOf('#region') !== -1)
@@ -57,14 +57,15 @@ export const updateRegions = (activeTextEditor: vscode.TextEditor, evt: vscode.T
             if (commentColor.length) {
                 colorObject = Color(commentColor[0]);
             } else {
-                colorObject = Color(`#${colors.colors()[i]}`);
+                colorObject = Color(`#${colors.colors()[i + 1]}`);
+                // colorObject = Color(colors[i]);
             }
 
             const _comment: Comment = activeTextEditor.document.positionAt(comment.start);
 
 
             if (colorObject.color.length > 0) {
-                _comment.color = colorObject.hex();
+                _comment.color = colorObject.alpha(0.3).rgb().toString();
             }
 
             // Add title
